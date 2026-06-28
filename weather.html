@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App — Live 7-Day Forecast</title>
+  <meta name="description" content="Live 7-day weather forecast powered by OpenWeatherMap. Search any city or use GPS." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-brand"><a href="index.html">WeatherScope</a></div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="weather.html" class="active">Weather App</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="app-hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Live Forecast</span>
+      <h1>7-Day Weather Planner</h1>
+      <p>Real-time forecast data with smart daily predictions, GPS detection, and unit switching.</p>
+    </div>
+    <aside class="glass-card">
+      <h2 style="font-family:var(--font-head);font-weight:700;margin-bottom:14px;font-size:1.05rem">Features</h2>
+      <ul class="feature-list">
+        <li>Live OpenWeatherMap API data</li>
+        <li>GPS + city search with history</li>
+        <li>Smart predictions & tips</li>
+        <li>°C / °F unit switching</li>
+        <li>UV index, pressure, visibility</li>
+        <li>Animated loading states</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="api-settings">
+    <div class="api-settings-card">
+      <h3>API Key Settings</h3>
+      <p>The OpenWeatherMap API key is now stored securely on the server. There is no client-side key entry required.</p>
+      <p>Set <code>OPENWEATHER_API_KEY</code> in your server environment and run the backend before using this app.</p>
+    </div>
+  </section>
+
+  <section class="weather-panel">
+    <div class="controls">
+      <div class="search-box">
+        <input id="cityInput" type="text" placeholder="Search a city — e.g. Tokyo, Karachi, London…" />
+        <button id="searchBtn" class="button" type="button">Search</button>
+      </div>
+      <button id="locationBtn" class="button button-secondary" type="button">📍 Use GPS</button>
+      <div class="unit-toggle" id="unitToggle">
+        <button data-unit="metric">°C</button>
+        <button data-unit="imperial">°F</button>
+      </div>
+    </div>
+
+    <div id="statusMessage" class="notice">Enter a city or allow GPS to load weather data.</div>
+
+    <div id="loadingSkeleton" hidden>
+      <div class="skeleton-summary">
+        <div class="skel-row">
+          <div style="flex:1;display:grid;gap:10px">
+            <div class="skeleton skel-h"></div>
+            <div class="skeleton skel-p"></div>
+            <div class="skeleton skel-p short"></div>
+          </div>
+          <div class="skel-cards" style="flex:1">
+            <div class="skeleton skel-card"></div>
+            <div class="skeleton skel-card"></div>
+            <div class="skeleton skel-card"></div>
+          </div>
+        </div>
+      </div>
+      <div class="skel-forecast" style="margin-top:16px">
+        <div class="skeleton skel-day"></div>
+        <div class="skeleton skel-day"></div>
+        <div class="skeleton skel-day"></div>
+        <div class="skeleton skel-day"></div>
+        <div class="skeleton skel-day"></div>
+        <div class="skeleton skel-day"></div>
+        <div class="skeleton skel-day"></div>
+      </div>
+    </div>
+
+    <section class="weather-summary" id="summarySection" hidden>
+      <div class="summary-header">
+        <div class="summary-left">
+          <h2 id="locationName">—</h2>
+          <p id="summaryText"></p>
+        </div>
+        <div class="summary-right">
+          <div class="summary-card">
+            <strong id="currentTemp">—</strong>
+            <span>Now</span>
+          </div>
+          <div class="summary-card">
+            <strong id="todayHigh">—</strong>
+            <span>High / Low</span>
+          </div>
+          <div class="summary-card">
+            <strong id="chanceRain">—</strong>
+            <span>Rain Chance</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="current-strip" id="currentStrip"></div>
+      <div id="weatherAlerts" class="alert" hidden></div>
+    </section>
+
+    <div id="predictionBanner" hidden></div>
+    <section id="searchHistory" class="search-history" style="display:none"></section>
+    <section class="forecast-grid" id="forecastSection" hidden></section>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>WeatherScope · Built with OpenWeatherMap API</p>
+</footer>
+
+<script src="weather.js"></script>
+<script>
+  const _sh = document.getElementById('searchHistory');
+  const _obs = new MutationObserver(() => {
+    _sh.style.display = _sh.innerHTML.trim() ? '' : 'none';
+  });
+  _obs.observe(_sh, { childList: true, subtree: true });
+</script>
+
+</body>
+</html>
